@@ -18,7 +18,6 @@ const INGREDIENTS_PRICES = {
 }
 
 class BurguerBuilder extends Component {
-
   /*constructor(props) {
     super(props);
     this.state = {...}
@@ -63,29 +62,18 @@ class BurguerBuilder extends Component {
 
   purchaseContinueHandler = async () => {
     this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Taylon Assis',
-        address: {
-          street: 'Rua das Ananás',
-          zipCode: '231512412',
-          country: 'Narnia'
-        },
-        email: 'taylon@taylon.com'
-      },
-      deliver: 'fastest'
-    };
 
-    try {
-      const response = await axiosOrder.post('/orders.json', order);
-      this.setState({ loading: false, purchasing: false });
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-      this.setState({ loading: false, purchasing: false });
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
     }
+    queryParams.push('price=' + this.state.totalPrice);
+    const queryString = queryParams.join('&');
+    this.props.history.push({
+      pathname: '/checkout',
+      search: '?' + queryString,
+    });
+    
     this.purchaseCanceledHandler();
   };
 
