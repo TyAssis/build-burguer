@@ -4,6 +4,9 @@ import BurguerIngredient from './BurguerIngredient/BurguerIngredient';
 
 import classes from './Burguer.module.css';
 
+//import { withRouter } from 'react-router-dom'; -- hoc for get history,
+// match and other route properties in a non direct routed component
+
 const burguer = (props) => {
 
   let transformedIngredients = Object.keys(props.ingredients)
@@ -29,4 +32,5 @@ const burguer = (props) => {
 
 };
 
+//export default withRouter(burguer);
 export default burguer;
