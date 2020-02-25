@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updatedObject } from '../utils';
+import { updatedObject } from '../../utils/utils';
 
 const initialState = {
   orders: [],
@@ -12,7 +12,7 @@ const purchaseInit = (state, action) => {
 };
 
 const purchaseBurguerStart = (state, action) => {
-  return updatedObject(state, { purchased: true });
+  return updatedObject(state, { purchased: true, loading: true });
 };
 
 const purchaseBurguerSucess = (state, action) => {
