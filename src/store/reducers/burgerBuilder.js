@@ -11,6 +11,7 @@ const initialState = {
     ingredients: null,
     totalPrice: 4,
     error: false,
+    building: false,
 };
 
 const INGREDIENTS_PRICES = {
@@ -27,7 +28,8 @@ const addIngredient = (state, action) => {
     const updatedIngredients = updatedObject(state.ingredients, updateIngredient);
     const updatedState = {
         ingredients: updatedIngredients,
-        totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName],
+        building: true,
     };
     return updatedObject(state, updatedState);
 };
@@ -38,8 +40,9 @@ const removeIngredient = (state, action) => {
     }
     const updatedIngredients = updatedObject(state.ingredients, updateIngredient);
     const updatedState = {
-        ingredients: { updatedIngredients },
-        totalPrice: state.totalPrice + INGREDIENTS_PRICES[action.ingredientName]
+        ingredients: updatedIngredients,
+        totalPrice: state.totalPrice - INGREDIENTS_PRICES[action.ingredientName],
+        building: true,
     };
     return updatedObject(state, updatedState);
 };
@@ -49,13 +52,14 @@ const setIngredients = (state, action) => {
         state, 
         {
             ingredients: {
-            salad: action.ingredients.salad,
-            bacon: action.ingredients.bacon,
-            cheese: action.ingredients.cheese,
-            meat: action.ingredients.meat,
-        },
+                salad: action.ingredients.salad,
+                bacon: action.ingredients.bacon,
+                cheese: action.ingredients.cheese,
+                meat: action.ingredients.meat,
+            },
             error: false,
             totalPrice: 4,
+            building: false,
         }
     );
 };
