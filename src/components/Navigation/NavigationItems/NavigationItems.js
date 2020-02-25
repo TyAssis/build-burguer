@@ -28,7 +28,7 @@ const navigationItems = props => (
             :
             <NavigationItem 
                 link="/logout">
-                Logout  
+                Logout
             </NavigationItem>
         }
     </ul>

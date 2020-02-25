@@ -12,7 +12,7 @@ import * as action from '../../store/actions/';
 
 import axiosOrder from '../../axios-order';
 
-class BurguerBuilder extends Component {
+export class BurguerBuilder extends Component {
   /*constructor(props) {
     super(props);
     this.state = {...}
