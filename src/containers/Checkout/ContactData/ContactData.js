@@ -7,6 +7,8 @@ import Input from '../../../components/UI/Input/Input';
 import axiosOrder from '../../../axios-order';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/';
+import { updatedObject } from '../../../utils/utils';
+import { checkValidity } from '../../../utils/checkValidity';
 
 import classes from './ContactData.module.css';
 
@@ -115,35 +117,16 @@ class ContactData extends Component {
         this.props.onOrderBurguer(order, this.props.token);
     }
 
-    checkValidity = (value, rules) => {
-        if (!rules) {
-            return true;
-        }
-
-        let isValid = true;
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        return isValid;
-    }
 
     inputChangedHandler = (event, inputIdentifier) => {
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        }
-        const updatedFormElement = {
-            ...updatedOrderForm[inputIdentifier]
-        }
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        updatedOrderForm[inputIdentifier] = updatedFormElement;
+        const updatedFormElement = updatedObject(this.state.orderForm[inputIdentifier], {
+            value: event.target.value,
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            touched: true,
+        })
+        const updatedOrderForm = updatedObject(this.state.orderForm, {
+            [inputIdentifier]: updatedFormElement,
+        })
         let formIsValid = true;
         for (let inputIdentifier in updatedOrderForm) {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
